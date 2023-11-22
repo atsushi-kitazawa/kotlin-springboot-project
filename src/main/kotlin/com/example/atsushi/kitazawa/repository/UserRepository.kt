@@ -1,8 +1,10 @@
 package com.example.atsushi.kitazawa.repository
 
 import com.example.atsushi.kitazawa.model.User
+import org.springframework.stereotype.Repository
 
-class UserRepository(){
+@Repository
+class UserRepository(): IUserRepository {
 
     private var users: MutableList<User> = mutableListOf()
 
@@ -15,13 +17,13 @@ class UserRepository(){
         users.add(u3)
     }
 
-    fun getUsers(): List<User> {
+    override fun getUsers(): List<User> {
         return users
     }
 
-    fun getUser(id: Int): User? {
-        for(u in users) {
-            if(u.id == id) {
+    override fun getUser(id: Int): User? {
+        for (u in users) {
+            if (u.id == id) {
                 return u
             }
         }
