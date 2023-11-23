@@ -29,4 +29,8 @@ class UserRepository(): IUserRepository {
         }
         return null
     }
+
+    override fun addUser(u: User) {
+        users.add(u)
+    }
 }
