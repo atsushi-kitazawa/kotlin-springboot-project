@@ -22,4 +22,21 @@ class UserRepository(@PersistenceContext private val entityManager: EntityManage
         entityManager.persist(u)
         return u
     }
+
+    @Transactional
+    override fun deleteUser(id: Int): User {
+        val u = entityManager.find(User::class.java, id)
+        entityManager.remove(u)
+        return u
+    }
+
+    @Transactional
+    override fun updateUser(u: User): User? {
+        val exist = entityManager.find(User::class.java, u.id)
+        if (exist == null) {
+            return null
+        }
+        entityManager.merge(u)
+        return u
+    }
 }

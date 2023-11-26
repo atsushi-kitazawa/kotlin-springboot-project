@@ -1,8 +1,8 @@
 # kotlin-sprintboot-project
 
 ## TODO
-- [ ] database access code
-- [ ] use orm
-- [ ] post, put request process
-- [ ] logging
+- [x] database access code
+- [x] use orm
+- [x] post, put request process
+- [x] logging
 - [ ] 
