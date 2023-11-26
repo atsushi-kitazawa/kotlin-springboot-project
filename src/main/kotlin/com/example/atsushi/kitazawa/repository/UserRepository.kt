@@ -1,36 +1,25 @@
 package com.example.atsushi.kitazawa.repository
 
 import com.example.atsushi.kitazawa.model.User
+import jakarta.persistence.EntityManager
+import jakarta.persistence.PersistenceContext
+import jakarta.transaction.Transactional
 import org.springframework.stereotype.Repository
 
 @Repository
-class UserRepository(): IUserRepository {
-
-    private var users: MutableList<User> = mutableListOf()
-
-    init {
-        val u1 = User(0, "aaa", 20)
-        val u2 = User(1, "bbb", 25)
-        val u3 = User(2, "ccc", 40)
-        users.add(u1)
-        users.add(u2)
-        users.add(u3)
-    }
+class UserRepository(@PersistenceContext private val entityManager: EntityManager) : IUserRepository {
 
     override fun getUsers(): List<User> {
-        return users
+        return entityManager.createQuery("from User", User::class.java).resultList
     }
 
     override fun getUser(id: Int): User? {
-        for (u in users) {
-            if (u.id == id) {
-                return u
-            }
-        }
-        return null
+        return entityManager.find(User::class.java, id)
     }
 
-    override fun addUser(u: User) {
-        users.add(u)
+    @Transactional
+    override fun addUser(u: User): User {
+        entityManager.persist(u)
+        return u
     }
 }
